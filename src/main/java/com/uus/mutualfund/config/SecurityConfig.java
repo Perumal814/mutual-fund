@@ -38,7 +38,7 @@ public class SecurityConfig {
 				.requestMatchers("/api/v1/mutual-funds/buy").hasAnyRole(Role.ADMIN.toString(), Role.USER.toString())
 				.requestMatchers("/api/v1/mutual-funds/redeem").hasAnyRole(Role.ADMIN.toString(), Role.USER.toString())
 				.anyRequest().authenticated()).headers(headers -> headers.frameOptions(frame -> frame.disable()))
-				.httpBasic(Customizer.withDefaults()).build();
+				.httpBasic(Customizer.withDefaults()).csrf(csrf -> csrf.disable()).build();
 	}
 
 	@Bean

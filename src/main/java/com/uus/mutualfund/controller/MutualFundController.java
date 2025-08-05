@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,15 +28,16 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/api/v1/mutual-funds")
 @Tag(name = "Mutual Fund Operations", description = "Mutual Fund Operations")
 @AllArgsConstructor
+@CrossOrigin(origins = "*", allowedHeaders = "*")
+@RequestMapping(URIConstants.API + "/${application.version1}" + URIConstants.MUTUAL_FUNDS)
 public class MutualFundController {
 
 	private final MutualFundService mutualFundService;
 	private final ModelMapper modelMapper;
 	private final Util util;
-	
+
 	@Operation(summary = "Add Mutual Funds", description = "Add Mutual Funds")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Add Mutual Funds Successful"),
 			@ApiResponse(responseCode = "400", description = "Bad Request"),
@@ -81,21 +83,4 @@ public class MutualFundController {
 		return ResponseEntity.ok(apiResponse);
 	}
 
-	/*
-	 * @GetMapping public List<MutualFundEntity> getAllFunds() { return
-	 * service.getAllFunds(); }
-	 * 
-	 * @GetMapping("/name/{name}") public ResponseEntity<?>
-	 * getFundByName(@PathVariable String name) { return
-	 * service.getFundByName(name).map(ResponseEntity::ok).orElse(ResponseEntity.
-	 * notFound().build()); }
-	 * 
-	 * @GetMapping("/{id}") public ResponseEntity<?> getFundById(@PathVariable Long
-	 * id) { return
-	 * service.getFundById(id).map(ResponseEntity::ok).orElse(ResponseEntity.
-	 * notFound().build()); }
-	 * 
-	 * @DeleteMapping("/{id}") public ResponseEntity<?> deleteFund(@PathVariable
-	 * Long id) { service.deleteFund(id); return ResponseEntity.ok().build(); }
-	 */
 }

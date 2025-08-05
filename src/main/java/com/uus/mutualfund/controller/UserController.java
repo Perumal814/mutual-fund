@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.uus.mutualfund.common.SuccessResponse;
 import com.uus.mutualfund.common.Util;
+import com.uus.mutualfund.constants.URIConstants;
 import com.uus.mutualfund.entity.UserEntity;
 import com.uus.mutualfund.exception.BusinessException;
 import com.uus.mutualfund.model.User;
@@ -27,22 +29,23 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/api/v1/users-profile")
+@RequestMapping(URIConstants.API + "/${application.version1}" + URIConstants.USER_PROFILE)
 @Tag(name = "User Profile Operations", description = "User Profile Operations")
 @AllArgsConstructor
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
 
 	private final UserService userService;
 	private final ModelMapper modelMapper;
 	private final Util util;
 	private final PasswordEncoder passwordEncoder;
-	
+
 	@Operation(summary = "Add the user", description = "Add the user")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Add user successful"),
 			@ApiResponse(responseCode = "400", description = "Bad Request"),
 			@ApiResponse(responseCode = "500", description = "Internal Server Error"),
 			@ApiResponse(responseCode = "503", description = "Service Unavailable") })
-	@PostMapping("/users")
+	@PostMapping(URIConstants.USERS)
 	public ResponseEntity<SuccessResponse> addUser(@RequestBody @Valid User userDto) {
 		UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
 		Optional<UserEntity> userInfo = userService.findUserByUsername(userEntity.getUsername());
