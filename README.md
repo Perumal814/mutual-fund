@@ -26,8 +26,7 @@ API documentation
 
 Instructions to run unit tests.
         1. Use header("Authorization", basicAuth("admin", "admin123")) with the username and password you created for each role.
-        2. I'm currently facing a 403 Forbidden issue—will update once it's resolved.
-		3. Check all scenarios using Postman.I’ll update the same repository once everything is done..
+		2. Replace the basicAuth method with role-based credentials and start testing. 
 		 
 		 
 
